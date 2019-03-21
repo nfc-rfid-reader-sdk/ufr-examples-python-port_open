@@ -1,5 +1,6 @@
 from ctypes import c_uint32, c_char_p, c_void_p, c_uint, c_ubyte, windll, byref
 import sys
+import ErrorCodes
 
 if sys.platform.startswith('win32'):
     uFR = windll.LoadLibrary("ufr-lib//windows//x86//uFCoder-x86.dll")
@@ -37,10 +38,14 @@ if __name__ == '__main__':
     
     status = ReaderOpenEx(0, "", 0, 0)
     if status == 0:
-        print("Status: UFR_OK")
+        print("Status: " + ErrorCodes.UFCODER_ERROR_CODES[status])
         print("Result: Port successfully opened")
         print("---------------------------------------------")
         ReaderUISignal(1,1)
+    elif status != 0:
+        print("Status: " + ErrorCodes.UFCODER_ERROR_CODES[status])
+        print("Result: Port not opened")
+        print("---------------------------------------------")
         
     print("Test finished.")
     wait = raw_input("Press ENTER to continue...")
