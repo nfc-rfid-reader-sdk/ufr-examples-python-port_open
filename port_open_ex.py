@@ -8,16 +8,16 @@ elif sys.platform.startswith('linux'):
     uFR = cdll.LoadLibrary("ufr-lib//linux//x86//libuFCoder-x86.so") 
 
 def ReaderOpenEx(reader_type, port_name, port_interface, arg):
-    open = uFR.ReaderOpenEx
-    open.argtypes = (c_uint32, c_char_p, c_uint32, c_void_p)
-    open.restype = c_uint
-    return open(reader_type, port_name, port_interface, arg)
+    openReader = uFR.ReaderOpenEx
+    openReader.argtypes = (c_uint32, c_char_p, c_uint32, c_void_p)
+    openReader.restype = c_uint
+    return openReader(reader_type, port_name, port_interface, arg)
 
 def ReaderUISignal(light, sound):
-	uiSignal = uFR.ReaderUISignal
-	uiSignal.argtypes = (c_ubyte, c_ubyte)
-	uiSignal.restype = c_uint
-	uiSignal(light, sound)
+    uiSignal = uFR.ReaderUISignal
+    uiSignal.argtypes = (c_ubyte, c_ubyte)
+    uiSignal.restype = c_uint
+    uiSignal(light, sound)
         
 if __name__ == '__main__':
 
@@ -37,6 +37,7 @@ if __name__ == '__main__':
     print("---------------------------------------------")
     
     status = ReaderOpenEx(0, "", 0, 0)
+    
     if status == 0:
         print("Status: " + ErrorCodes.UFCODER_ERROR_CODES[status])
         print("Result: Port successfully opened")
